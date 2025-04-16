@@ -21,7 +21,7 @@ public class GroundSpawner : MonoBehaviour
 
     void Update()
     {
-        // Si el jugador está cerca del final del camino, genera una nueva losa
+        // Spawnea nuevo tile cuando el jugador se acerca al final
         if (player.position.z - 60 > spawnPosition.z - (initialTiles * tileLength))
         {
             SpawnTile();
@@ -32,6 +32,14 @@ public class GroundSpawner : MonoBehaviour
     void SpawnTile()
     {
         GameObject tile = Instantiate(groundTilePrefab, spawnPosition, Quaternion.identity);
+
+        // Llama al método para colocar obstáculos aleatorios
+        GroundTile tileScript = tile.GetComponent<GroundTile>();
+        if (tileScript != null)
+        {
+            tileScript.SpawnObstacle();
+        }
+
         activeTiles.Add(tile);
         spawnPosition.z += tileLength;
     }
@@ -42,7 +50,7 @@ public class GroundSpawner : MonoBehaviour
 
         GameObject firstTile = activeTiles[0];
 
-        // Solo elimina si el jugador está suficientemente lejos del tile
+        // Solo elimina si el jugador está bien lejos
         if (player.position.z - firstTile.transform.position.z > tileLength + 10f)
         {
             Destroy(firstTile);
