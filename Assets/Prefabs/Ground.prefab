@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8622139250157454623}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spawn3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 58636648756062165}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spawn1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 632670874060498730}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spawn2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 864715332783590906}
   - component: {fileID: 6876088590853416808}
   - component: {fileID: 3490290014591629794}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 121250231243195306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ObstacleSpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
