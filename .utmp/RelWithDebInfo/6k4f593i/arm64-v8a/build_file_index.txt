@@ -1,0 +1,2 @@
+H:\Facultad\MotoreII\Runner\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+H:\Facultad\MotoreII\Runner\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

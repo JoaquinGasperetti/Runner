@@ -1,0 +1,5 @@
+H:/Facultad/MotoreII/Runner/.utmp/RelWithDebInfo/6k4f593i/arm64-v8a/CMakeFiles/edit_cache.dir
+H:/Facultad/MotoreII/Runner/.utmp/RelWithDebInfo/6k4f593i/arm64-v8a/CMakeFiles/rebuild_cache.dir
+H:/Facultad/MotoreII/Runner/.utmp/RelWithDebInfo/6k4f593i/arm64-v8a/GameActivity/CMakeFiles/game.dir
+H:/Facultad/MotoreII/Runner/.utmp/RelWithDebInfo/6k4f593i/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+H:/Facultad/MotoreII/Runner/.utmp/RelWithDebInfo/6k4f593i/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir

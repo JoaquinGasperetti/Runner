@@ -1,31 +1,43 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameOverManager : MonoBehaviour
 {
     public GameObject gameOverPanel;
-    public TextMeshProUGUI scoreText;
-    public Button restartButton;
-    public ScoreManager scoreManager;
+    public Button retryButton;
+    public Button mainMenuButton;
+
+    private AdManager adManager;
 
     void Start()
     {
         gameOverPanel.SetActive(false);
-        restartButton.onClick.AddListener(RestartGame);
+
+        retryButton.onClick.AddListener(Retry);
+        mainMenuButton.onClick.AddListener(GoToMainMenu);
+
+        adManager = FindAnyObjectByType<AdManager>();
     }
 
     public void GameOver()
     {
-        gameOverPanel.SetActive(true);
-        scoreText.text = "Puntos: " + scoreManager.puntaje.ToString();
         Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
+
+        if (adManager != null)
+            adManager.ShowInterstitial();
     }
 
-    void RestartGame()
+    public void Retry() // <-- ahora es pública
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void GoToMainMenu() // <-- ahora es pública
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
     }
 }

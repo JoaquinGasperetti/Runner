@@ -1,60 +1,98 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float forwardSpeed = 10f;
     public float laneDistance = 3f;
     public float jumpForce = 7f;
+    public float slideDuration = 0.5f;
     public LayerMask groundLayer;
 
     private int currentLane = 1;
     private Rigidbody rb;
     private Vector3 targetPosition;
-
-    public GameOverManager gameOverManager;
-    private bool canCollide = true;  // Bandera para controlar las colisiones
+    private Animator animator;
+    private bool isSliding = false;
+    private float slideTimer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>(); // Animator en el modelo hijo
         targetPosition = transform.position;
         rb.freezeRotation = true;
     }
 
     void Update()
     {
-        if (!canCollide) return;  // Si no puede colisionar, no procesamos la l�gica
-
         Vector3 velocity = rb.linearVelocity;
 
-        if (transform.position.y < -10f)
-        {
-            gameOverManager.GameOver();
-            return;
-        }
-
+        // Movimiento hacia adelante constante
         velocity.z = forwardSpeed;
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        bool grounded = IsGrounded();
+
+        // Detectar salto
+        if ((Input.GetKeyDown(KeyCode.Space) || SwipeManager.swipeUp) && grounded && !isSliding)
         {
             velocity.y = jumpForce;
+            animator.SetBool("IsJumping", true);
         }
         else
         {
             velocity.y = rb.linearVelocity.y;
         }
 
+        // Detectar deslizamiento
+        if ((Input.GetKeyDown(KeyCode.DownArrow) || SwipeManager.swipeDown) && grounded && !isSliding)
+        {
+            StartSlide();
+        }
+        else if ((Input.GetKeyDown(KeyCode.DownArrow) || SwipeManager.swipeDown) && !grounded)
+        {
+            // Forzar bajada rápida en el aire
+            velocity.y = -jumpForce;
+        }
+
+        // Terminar slide
+        if (isSliding)
+        {
+            slideTimer -= Time.deltaTime;
+            if (slideTimer <= 0)
+            {
+                EndSlide();
+            }
+        }
+
         rb.linearVelocity = velocity;
 
+        // Actualizar animaciones
+        animator.SetFloat("Speed", grounded ? forwardSpeed : 0f);
+        animator.SetBool("IsJumping", !grounded);
+
+        // Movimiento lateral suave
         Vector3 newPosition = transform.position;
         newPosition.x = Mathf.Lerp(transform.position.x, targetPosition.x, Time.deltaTime * 10f);
         transform.position = newPosition;
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        // Cambio de carril
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || SwipeManager.swipeLeft)
             ChangeLane(-1);
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || SwipeManager.swipeRight)
             ChangeLane(1);
+    }
+
+    void StartSlide()
+    {
+        isSliding = true;
+        slideTimer = slideDuration;
+        animator.SetBool("Slide", true);
+    }
+
+    void EndSlide()
+    {
+        isSliding = false;
+        animator.SetBool("Slide", false);
     }
 
     void ChangeLane(int direction)
@@ -75,22 +113,9 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstaculo"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Obstaculo"))
         {
-            if (canCollide)
-            {
-                gameOverManager.GameOver();
-            }
+            FindObjectOfType<GameOverManager>().GameOver();
         }
-    }
-
-    public void DisableCollisions()
-    {
-        canCollide = false;  // Desactivar las colisiones
-    }
-
-    public void EnableCollisions()
-    {
-        canCollide = true;   // Activar las colisiones
     }
 }
