@@ -8,7 +8,7 @@ public class GameOverManager : MonoBehaviour
     public Button retryButton;
     public Button mainMenuButton;
 
-    private AdManager adManager;
+  //  private AdManager adManager;
 
     void Start()
     {
@@ -17,7 +17,7 @@ public class GameOverManager : MonoBehaviour
         retryButton.onClick.AddListener(Retry);
         mainMenuButton.onClick.AddListener(GoToMainMenu);
 
-        adManager = FindAnyObjectByType<AdManager>();
+        //adManager = FindAnyObjectByType<AdManager>();
     }
 
     public void GameOver()
@@ -25,8 +25,8 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
 
-        if (adManager != null)
-            adManager.ShowInterstitial();
+      //  if (adManager != null)
+         //   adManager.ShowInterstitial();
     }
 
     public void Retry() // <-- ahora es pública
